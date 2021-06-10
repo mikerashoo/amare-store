@@ -47,7 +47,11 @@ class ReportController extends Controller
 
     public function SellsOnDate($date)
     {
+<<<<<<< HEAD
         $sells = Sell::with('transactions', 'customer', 'loan')->orderBy('created_at', 'DESC')->whereDate('created_at', $date)->get(); 
+=======
+        $sells = Sell::with('transactions', 'customer', 'loan', 'user')->orderBy('created_at', 'DESC')->whereDate('created_at', $date)->get(); 
+>>>>>>> f943059fc8ecfca792a2f2e6aeaade24466c40c5
         foreach ($sells as $sell) {
             foreach ($sell->transactions as $transact) {
                 $transact->item;

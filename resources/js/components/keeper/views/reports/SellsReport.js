@@ -1,5 +1,9 @@
 import React from 'react'
+<<<<<<< HEAD
 import { Table, Button, Card, Popconfirm, Typography } from "antd";
+=======
+import { Table, Button, Card, Popconfirm, Typography, Tag } from "antd";
+>>>>>>> f943059fc8ecfca792a2f2e6aeaade24466c40c5
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDailyTransactionsAction, deleteDailySellAction } from "../../actions/dailyActions";
 import moment from "moment";  
@@ -11,7 +15,11 @@ function SellsReport() {
     const dispatch = useDispatch();
     const dailySell = useSelector(state => state.dailySell);
     
+<<<<<<< HEAD
     dailySell.data.sells.forEach(sell => {
+=======
+    dailySell.data.sells.forEach(sell => { 
+>>>>>>> f943059fc8ecfca792a2f2e6aeaade24466c40c5
         total_sell += sell.total;
         total_loan += sell.loan ? sell.loan.price : 0;
     });
@@ -49,9 +57,15 @@ function SellsReport() {
             </>
         },           
         {
+<<<<<<< HEAD
             render: (trans, sell) => <Popconfirm title="እርገጠኛ ነኝ ሽያጩን ሰርዝ" okText="አዎ ሰርዝ" cancelText="አይ ተው!" onConfirm={() => deleteSell(sell)}>
             <Button type="primary" style={{backgroundColor: 'red', borderColor: 'red'}} size="small">ሰርዝ</Button>
             </Popconfirm>
+=======
+            render: (trans, sell) => <>{sell.user_id != window.user.id ? <Tag color="green">{sell.user.name}</Tag> : <Popconfirm title="እርገጠኛ ነኝ ሽያጩን ሰርዝ" okText="አዎ ሰርዝ" cancelText="አይ ተው!" onConfirm={() => deleteSell(sell)}>
+            <Button type="primary" style={{backgroundColor: 'red', borderColor: 'red'}} size="small">ሰርዝ</Button>
+            </Popconfirm> }</> 
+>>>>>>> f943059fc8ecfca792a2f2e6aeaade24466c40c5
         },  
     ]
     const sellsTransactionTableColumns = [        
@@ -84,7 +98,14 @@ function SellsReport() {
     return ( 
         <Card style={{marginBottom: 30}} title="የቀን ገብ በሽያጭ">
         
+<<<<<<< HEAD
         <Table dataSource={sells} loading={dailySell.loading} rowKey="id"            
+=======
+        <Table 
+        // rowClassName={(record, index) => record.user_id != window.user.id ? 'table-row-light' :  'table-row-dark'}
+        dataSource={sells} 
+        loading={dailySell.loading} rowKey="id"            
+>>>>>>> f943059fc8ecfca792a2f2e6aeaade24466c40c5
         columns={sellsTableColumns} bordered pagination={false}
         expandable={{
             expandedRowRender: sell => <>

@@ -22,4 +22,12 @@ class Sell extends Model
     {
         return $this->belongsTo('App\Models\Customer', 'customer_id');
     }
+<<<<<<< HEAD
+=======
+    
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User', 'user_id');
+    }
+>>>>>>> f943059fc8ecfca792a2f2e6aeaade24466c40c5
 }
