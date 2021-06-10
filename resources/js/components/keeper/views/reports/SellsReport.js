@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, Button, Card, Popconfirm, Typography } from "antd";
+import { Table, Button, Card, Popconfirm, Typography, Tag } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDailyTransactionsAction, deleteDailySellAction } from "../../actions/dailyActions";
 import moment from "moment";  
@@ -11,7 +11,7 @@ function SellsReport() {
     const dispatch = useDispatch();
     const dailySell = useSelector(state => state.dailySell);
     
-    dailySell.data.sells.forEach(sell => {
+    dailySell.data.sells.forEach(sell => { 
         total_sell += sell.total;
         total_loan += sell.loan ? sell.loan.price : 0;
     });
@@ -49,9 +49,9 @@ function SellsReport() {
             </>
         },           
         {
-            render: (trans, sell) => <Popconfirm title="እርገጠኛ ነኝ ሽያጩን ሰርዝ" okText="አዎ ሰርዝ" cancelText="አይ ተው!" onConfirm={() => deleteSell(sell)}>
+            render: (trans, sell) => <>{sell.user_id != window.user.id ? <Tag color="green">{sell.user.name}</Tag> : <Popconfirm title="እርገጠኛ ነኝ ሽያጩን ሰርዝ" okText="አዎ ሰርዝ" cancelText="አይ ተው!" onConfirm={() => deleteSell(sell)}>
             <Button type="primary" style={{backgroundColor: 'red', borderColor: 'red'}} size="small">ሰርዝ</Button>
-            </Popconfirm>
+            </Popconfirm> }</> 
         },  
     ]
     const sellsTransactionTableColumns = [        
@@ -84,7 +84,10 @@ function SellsReport() {
     return ( 
         <Card style={{marginBottom: 30}} title="የቀን ገብ በሽያጭ">
         
-        <Table dataSource={sells} loading={dailySell.loading} rowKey="id"            
+        <Table 
+        // rowClassName={(record, index) => record.user_id != window.user.id ? 'table-row-light' :  'table-row-dark'}
+        dataSource={sells} 
+        loading={dailySell.loading} rowKey="id"            
         columns={sellsTableColumns} bordered pagination={false}
         expandable={{
             expandedRowRender: sell => <>
