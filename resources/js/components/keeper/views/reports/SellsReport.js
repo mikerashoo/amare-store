@@ -49,9 +49,13 @@ function SellsReport() {
             </>
         },           
         {
-            render: (trans, sell) => <>{sell.user_id != window.user.id ? <Tag color="green">{sell.user.name}</Tag> : <Popconfirm title="እርገጠኛ ነኝ ሽያጩን ሰርዝ" okText="አዎ ሰርዝ" cancelText="አይ ተው!" onConfirm={() => deleteSell(sell)}>
-            <Button type="primary" style={{backgroundColor: 'red', borderColor: 'red'}} size="small">ሰርዝ</Button>
-            </Popconfirm> }</> 
+            render: (trans, sell) => <>{sell.user_id != window.user.id ? 
+            <Tag color="orange">{sell.user.name}</Tag> : 
+            moment(sell.created_at).isSame(moment(), 'day') ? 
+            <Popconfirm title="እርገጠኛ ነኝ ሽያጩን ሰርዝ" okText="አዎ ሰርዝ" cancelText="አይ ተው!" onConfirm={() => deleteSell(sell)}>
+                <Button type="primary" style={{backgroundColor: 'red', borderColor: 'red'}} size="small">ሰርዝ</Button>
+            </Popconfirm> : <Tag color="green">You</Tag>
+             }</> 
         },  
     ]
     const sellsTransactionTableColumns = [        
