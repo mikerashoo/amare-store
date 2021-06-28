@@ -10,6 +10,8 @@ use App\Models\Transaction;
 use App\Models\Sell;
 use Carbon\Carbon;
 
+Carbon::setWeekStartsAt(Carbon::SUNDAY);
+Carbon::setWeekEndsAt(Carbon::SATURDAY);
 class ItemController extends Controller
 {
     public function categories()
@@ -77,5 +79,27 @@ class ItemController extends Controller
         $item->status = 0;
         $item->save();
     }  
-    
+
+    public function dailyTransactions($item_id, $date){
+        if($date == 'today'){
+            $date = date('Y-m-d');
+        }
+        $item = Item::find($item_id);
+        $item->transactions = $item->transactions()->whereDate('created_at', $date)->orderBy('created_at', 'DESC')->get();
+        foreach($item->transactions as $transaction){
+            $transaction->user = $transaction->user;
+        }
+        return $item;
+    }
+
+    public function weeklyTransactions($item_id, $start_date, $end_date){
+        $item = Item::find($item_id);
+ 
+            $item->transactions = $item->transactions()->whereBetween('created_at', [$start_date, $end_date])->orderBy('created_at', 'DESC')->get(); 
+        foreach($item->transactions as $transaction){
+            $transaction->user = $transaction->user;
+        }
+        return $item;
+    }
+
 }

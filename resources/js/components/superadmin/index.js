@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Row, Col} from 'antd';
 import {SideMenu, PageRoutes} from './views'
-import { BrowserRouter } from 'react-router-dom'; 
+import { BrowserRouter, HashRouter } from 'react-router-dom'; 
 import { Provider } from 'react-redux';
 import store from './store';
 function SuperAdmin() {
     return ( 
         <Provider store={store}>
-        <BrowserRouter>
+        <BrowserRouter basename="/superadmin">
         <Row style={{backgroundColor: '#eee', height: '100vh'}} gutter={[16, 16]}>
         <Col span={4} style={{backgroundColor: 'white', paddingTop: 10}}>
         <SideMenu />

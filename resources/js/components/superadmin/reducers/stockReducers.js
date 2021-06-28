@@ -33,6 +33,7 @@ export const stockReducers = (state = INITIAL_STATE, action) => {
         }
 
         case STOCK_ACTIONS.SHOW_TRANSACTIONS_ACTION:  
+        console.log('transactions =>', action.transactions);
         return {
             ...state, 
             loading: false,
