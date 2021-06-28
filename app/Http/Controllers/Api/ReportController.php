@@ -24,6 +24,14 @@ class ReportController extends Controller
         return $transactions;
     }   
 
+    public function weeklyTransactions(){
+        $current_week_transactions = Transaction::orderBy('created_at', 'desc')->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])->where('sell_id', null)->get();
+        foreach ($current_week_transactions as $transaction) {
+            $transaction->item;
+        }
+        return $current_week_transactions;
+    }
+
     public function SellTransactionsOnDate($date)
     {
         $items = Item::all(); 
@@ -76,4 +84,5 @@ class ReportController extends Controller
         }
         return $sell->delete();
     } 
+
 }

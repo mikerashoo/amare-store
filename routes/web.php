@@ -26,3 +26,4 @@ Route::get('/superadmin', [App\Http\Controllers\SuperAdminController::class, 'in
 Route::get('/superadmin/{any}', [App\Http\Controllers\SuperAdminController::class, 'index']);
 Route::get('/keeper', [App\Http\Controllers\HomeController::class, 'keeper'])->name('keeper_home');
 Route::get('/keeper/{any}', [App\Http\Controllers\HomeController::class, 'keeper']);
+Route::get('/{any}', [App\Http\Controllers\HomeController::class, 'index']);

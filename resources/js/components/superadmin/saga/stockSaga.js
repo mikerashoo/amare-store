@@ -15,6 +15,7 @@ function* fetchStocksSaga(){
 function* fetchTransactionsSaga(){
     try {  
         const stockData = yield call(fetchTransactionsApi); 
+        console.log('stock data =>', stockData);
         yield put (showTransactionsAction(stockData));
     }
     catch (error) {

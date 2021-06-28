@@ -1,8 +1,10 @@
-import { Card, Col, Row, Table, Form, Select, Input, message, List } from 'antd';
+import { Card, Col, Row, Table, Button, Select, Input, message, List } from 'antd';
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchStocksAction, fetchTransactionsAction, saveNewTransactionAction } from "../actions/stockActions";
 import { ArrowUpOutlined, ArrowDownOutlined, PlusCircleOutlined, MinusCircleOutlined } from "@ant-design/icons"; 
+import moment from 'moment';
+import { NavLink, useHistory, Link } from 'react-router-dom';
 
 function Stocks() {
     const dispatch = useDispatch();
@@ -32,6 +34,11 @@ function Stocks() {
         dispatch(fetchStocksAction());
         dispatch(fetchTransactionsAction());
     }, [dispatch]);
+
+    const showDetail = item_id => {
+        let history = useHistory();
+        history.push('/item_transactions/' + item_id);
+    }
     
     const itemColumns = [
         {
@@ -41,7 +48,11 @@ function Stocks() {
         {
             title: 'name',
             dataIndex: 'name',
-            width: '40%'
+            width: '40%',
+            render: (name, item) => <Link to={{pathname: '/item_transactions', state: {
+                item_id: item.id
+            }}}> {item.name} </Link>
+            // render: (name, item) => <NavLink to={`/item_transactions/${item.id}`}>{item.name} </NavLink>
         },
         {
             title: 'Remaining in store',
@@ -71,6 +82,7 @@ function Stocks() {
         {
             title: 'time',  
             dataIndex: 'created_at',  
+            render: (created_at, i) => <>{moment(created_at).fromNow()}</>
         }, 
     ]
     
@@ -85,11 +97,11 @@ function Stocks() {
         }
         </Col>
         <Col span={8}>
-        <Card hoverable bordered headStyle={{backgroundColor: '#eef'}} title="Today's transactions" style={{marginTop: 30}}>
+        <Card hoverable bordered headStyle={{backgroundColor: '#eef'}} title="Recent transactions" style={{marginTop: 30}}>
             {
                stocks.data && <Table dataSource={stocks.data.transactions} columns={transactionsColumns} rowKey="id" bordered hoverable/>
             }
-            </Card>)
+            </Card>
         </Col>
         </Row>
         )

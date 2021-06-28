@@ -4,6 +4,7 @@ import categorySaga from "./categorySaga";
 import unitSaga from "./unitSaga";
 import itemSaga from "./itemSaga";
 import stockSaga from "./stockSaga";
+import itemTransactionsSaga from "./itemTransactionsSaga"; 
 
 function* rootSaga () {
     yield all([
@@ -12,6 +13,7 @@ function* rootSaga () {
         unitSaga(),
         itemSaga(),
         stockSaga(),
+        itemTransactionsSaga()
     ]);
 }
 
