@@ -42,21 +42,25 @@ function Weekly(props) {
     ];
 
     const { RangePicker } = DatePicker;
-    const dateFormat = 'YYYY/MM/DD'; 
-    let today = moment();  
-    let start_date = today.startOf('week'); 
+    const dateFormat = 'YYYY-MM-DD'; 
+    let today = moment().format(dateFormat); 
+    let start_date = moment().startOf('week').format(dateFormat);; 
     let end_date = today; 
     console.log("start date", start_date);
     console.log("end date", end_date);
 
     useEffect(() => {
-        dispatch(fetchWeeklyTransactions(item_id, start_date.toString(), end_date.toString())); 
+        dispatch(fetchWeeklyTransactions(item_id, start_date, end_date)); 
     }, [dispatch, item_id]);
  
     function onChange(date, dateRange) { 
-        console.log(date);
-        console.log('date range', dateRange);
-        // dispatch(fetchWeeklyTransactions(item_id, dateRange)); 
+        if(dateRange[0] != ""){
+            dispatch(fetchWeeklyTransactions(item_id, dateRange[0], dateRange[1])); 
+        }
+        else {
+        dispatch(fetchWeeklyTransactions(item_id, start_date, end_date)); 
+
+        }
       }
       
     return (
@@ -68,8 +72,7 @@ function Weekly(props) {
                     </Col>
                     <Col span={6}>
                     <RangePicker
-                    onChange={onChange}
-      defaultValue={[start_date , today]}
+                    onChange={onChange} 
       format={dateFormat}
     />
                     </Col>

@@ -8,8 +8,8 @@ export const fetchItemDailyTransactionsApi = async (id, date) => {
   }
    
   
-export const fetchItemWeeklyTransactionsApi = async (id, date_range) => {   
-  const call = await axios.get(FETCH_WEEKLY_ITEM_TRANSACTIONS_URL + id + '/' + date_range); 
+export const fetchItemWeeklyTransactionsApi = async (id, start_date, end_date) => {   
+  const call = await axios.get(FETCH_WEEKLY_ITEM_TRANSACTIONS_URL + id + '/' + start_date + '/' + end_date); 
   let response = await call.data;  
   console.log("weekly response", response);
   return await response;
