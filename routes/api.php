@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
 Route::get('/users', [App\Http\Controllers\Api\UserController::class, 'index']);
 Route::post('/new_user', [App\Http\Controllers\Api\UserController::class, 'create']);
 
@@ -35,6 +36,8 @@ Route::group(['prefix' => 'items'], function () {
     Route::post('save', [App\Http\Controllers\Api\ItemController::class, 'save']);
     Route::post('update', [App\Http\Controllers\Api\ItemController::class, 'update']);
     Route::delete('delete/{id}', [App\Http\Controllers\Api\ItemController::class, 'delete']); 
+    Route::get('daily_transactions/{id}/{date}', [App\Http\Controllers\Api\ItemController::class, 'dailyTransactions']);
+    Route::get('weekly_transactions/{id}/{start_date}/{end_date}', [App\Http\Controllers\Api\ItemController::class, 'weeklyTransactions']);
 });
 Route::group(['prefix' => 'units'], function () {
     Route::get('all', [App\Http\Controllers\Api\UnitController::class, 'index']);
@@ -49,8 +52,8 @@ Route::group(['prefix' => 'stocks'], function () {
     Route::post('new_sell', [App\Http\Controllers\Api\StockController::class, 'newSell']);  
     Route::get('customers', [App\Http\Controllers\Api\StockController::class, 'getCustomers']); 
     Route::delete('delete_sell/{id}', [App\Http\Controllers\Api\ReportController::class, 'deleteSell']);  
-
-});
+    Route::get('weekly_transactions', [App\Http\Controllers\Api\ReportController::class, 'weeklyTransactions']);   
+}); 
 
 Route::group(['prefix' => 'keeper_reports'], function () { 
     Route::get('transactions', [App\Http\Controllers\Api\ReportController::class, 'transactions']);   

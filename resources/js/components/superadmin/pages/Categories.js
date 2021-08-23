@@ -17,7 +17,7 @@ function Categories() {
         {
             title: 'Name',
             dataIndex:'name',
-            render: (c, category) => <NavLink to={`/superadmin/category/${category.id}`}>{category.name} </NavLink>
+            render: (c, category) => <NavLink to={`/category/${category.id}`}>{category.name} </NavLink>
         },
         {
             title: 'Measurements',

@@ -8,16 +8,16 @@ function SideMenu() {
         <Menu mode="inline" defaultOpenKeys={['contents', 'stocks', 'reports']} style={{height: '100vh'}}> 
         <Menu.SubMenu title="Content Management" key="contents">
         <Menu.Item key="users">
-        <NavLink to="/superadmin/users"> Users </NavLink>
+        <NavLink to="/users"> Users </NavLink>
         </Menu.Item> 
         <Menu.Item key="items">
-        <NavLink to="/superadmin/categories"> Items </NavLink>
+        <NavLink to="/categories"> Items </NavLink>
         </Menu.Item> 
         
         </Menu.SubMenu> 
         <Menu.SubMenu title="Manage Stock" key="stocks">
         <Menu.Item>
-        <NavLink to="/superadmin/stocks"> Add to stock </NavLink>
+        <NavLink to="/stocks"> Stocks </NavLink>
         </Menu.Item> 
         
         </Menu.SubMenu>  

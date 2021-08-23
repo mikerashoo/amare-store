@@ -21,4 +21,8 @@ export const DELETE_UNITS_URL = "/api/units/delete";
 // Stocks api
 export const FETCH_STOCK_ITEMS_URL = "/api/stocks/items";
 export const FETCH_TRANSACTIONS_URL = "/api/stocks/transactions";
+export const FETCH_WEEKLY_TRANSACTIONS_URL = "/api/stocks/weekly_transactions";
 export const SAVE_NEW_TRANSACTION_URL = "/api/stocks/newTransaction";
+
+export const FETCH_DAILY_ITEM_TRANSACTIONS_URL = "/api/items/daily_transactions/";
+export const FETCH_WEEKLY_ITEM_TRANSACTIONS_URL = "/api/items/weekly_transactions/";
