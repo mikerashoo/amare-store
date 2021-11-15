@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Amare Store Management'),
+    'name' => env('APP_NAME', 'WerkamaStore'),
 
     /*
     |--------------------------------------------------------------------------

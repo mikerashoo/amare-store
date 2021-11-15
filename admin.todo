@@ -1,0 +1,7 @@
+user management
+    - edit and delete user
+    - user saved message change to modal
+Items management
+    - units empty message
+Categoires
+    - Use history push instead of passing id

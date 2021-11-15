@@ -14,10 +14,10 @@ use App\Models\LoanPayment;
 use Carbon\Carbon;
 
 class LoanController extends Controller
-{   
+{
     public function getUnpaidLoans()
     {
-       return Loan::with('customer', 'user', 'payments', 'sell.transactions.item')->where('status', 'unpaid')->orderBy('created_at', 'DESC')->get(); 
+        return Loan::with('customer', 'user', 'payments', 'sell.transactions.item')->where('status', 'unpaid')->orderBy('created_at', 'DESC')->get();
     }
 
     public function saveLoanPayment(Request $request)
@@ -29,18 +29,29 @@ class LoanController extends Controller
         $loan_payment->save();
         $loan = Loan::find($request->loan_id);
         $paid = 0;
-        foreach($loan->payments as $payment){
+        foreach ($loan->payments as $payment) {
             $paid += $payment->amount;
         }
-        if($loan->price == $paid){
+        if ($loan->price == $paid) {
             $loan->status = 'paid';
             $loan->save();
         }
         return LoanPayment::find($loan_payment->id);
     }
 
-    public function todaysLoanPayments($user_id){
-        $loan_payments = LoanPayment::with('loan.customer')->orderBy('created_at', 'DESC')->where('user_id', $user_id)->whereDate('created_at', Carbon::today())->get(); 
+    public function todaysLoanPayments($user_id)
+    {
+        $loan_payments = LoanPayment::with('loan.customer')->orderBy('created_at', 'DESC')->where('user_id', $user_id)->whereDate('created_at', Carbon::today())->get();
         return $loan_payments;
+    }
+
+    public function loanPaymentsOnDate($date, $user_id)
+    {
+        $total = 0;
+        $loan_payments = LoanPayment::with('loan.customer')->orderBy('created_at', 'DESC')->where('user_id', $user_id)->whereDate('created_at', $date)->get();
+        foreach ($loan_payments as $key => $payment) {
+            $total += $payment->amount;
+        }
+        return $total;
     }
 }

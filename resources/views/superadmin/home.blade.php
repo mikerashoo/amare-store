@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid">
+<div>
     <div id="superadmin_app" ></div>
-</div> 
+</div>
 <script>
     window.user = {
         id: {{Auth::user()->id}}

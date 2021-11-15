@@ -1,36 +1,35 @@
 import React from 'react'
-import {Menu} from 'antd'; 
+import { Menu } from 'antd';
 import { NavLink } from 'react-router-dom'
-import {} from '@ant-design/icons'
+import { SideMenuItem, SideSubMenuItem } from '../admin-styled'
 function SideMenu() {
-    return ( 
-        <div> 
-        <Menu mode="inline" defaultOpenKeys={['contents', 'stocks', 'reports']} style={{height: '100vh'}}> 
-        <Menu.SubMenu title="Content Management" key="contents">
-        <Menu.Item key="users">
-        <NavLink to="/users"> Users </NavLink>
-        </Menu.Item> 
-        <Menu.Item key="items">
-        <NavLink to="/categories"> Items </NavLink>
-        </Menu.Item> 
-        
-        </Menu.SubMenu> 
-        <Menu.SubMenu title="Manage Stock" key="stocks">
-        <Menu.Item>
-        <NavLink to="/stocks"> Stocks </NavLink>
-        </Menu.Item> 
-        
-        </Menu.SubMenu>  
+    return (
+        <div>
+            <Menu mode="inline" defaultOpenKeys={['contents', 'stocks', 'reports']} style={{ height: '100vh', backgroundColor: "#f5f5f5" }}>
+                <SideSubMenuItem title="Content Management" key="contents">
+                    <SideMenuItem key="users">
+                        <NavLink to="/users"> Users </NavLink>
+                    </SideMenuItem>
+                    <SideMenuItem key="items">
+                        <NavLink to="/categories"> Items </NavLink>
+                    </SideMenuItem>
 
-        <Menu.SubMenu title="Reports" key="reports">
-        <Menu.Item disabled>Daily</Menu.Item> 
-        <Menu.Item disabled>Monthly</Menu.Item>
-        </Menu.SubMenu> 
-        </Menu> 
+                </SideSubMenuItem>
+                <SideSubMenuItem title="Manage Stock" key="stocks">
+                    <SideMenuItem>
+                        <NavLink to="/stocks"> Stocks </NavLink>
+                    </SideMenuItem>
+
+                </SideSubMenuItem>
+
+                <SideSubMenuItem title="Reports" key="reports">
+                    <SideMenuItem disabled>Daily</SideMenuItem>
+                    <SideMenuItem disabled>Monthly</SideMenuItem>
+                </SideSubMenuItem>
+            </Menu>
         </div>
-        )
-    }
-    
-    export default SideMenu
-    
-    
+    )
+}
+
+export default SideMenu
+

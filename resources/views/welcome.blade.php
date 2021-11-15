@@ -20,20 +20,82 @@
                 font-family: 'Nunito';
             }
         </style>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     </head>
     <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
-            @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 underline">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Login</a>
-                    @endauth
-                </div>
-            @endif
+        <div class="container">
+            <div class="justify-center min-h-screen bg-gray-100 dark:bg-gray-900 py-5 my-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                    <img src="{{ asset('images/WERKAMA STORE cropped.png') }}" width="100%" class="rounded-circle" />
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">{{ __('Login') }}</div>
 
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
+                            <div class="card-body">
+                                <form method="POST" action="{{ route('login') }}">
+                                    @csrf
+
+                                    <div class="form-group row">
+                                        <label for="user_name" class="col-md-4 col-form-label text-md-right">{{ __('User name') }}</label>
+
+                                        <div class="col-md-6">
+                                            <input id="user_name" type="text" class="form-control @error('user_name') is-invalid @enderror" name="user_name" value="{{ old('user_name') }}" required autocomplete="user_name" autofocus>
+
+                                            @error('user_name')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                                        <div class="col-md-6">
+                                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+
+                                            @error('password')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-6 offset-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                                <label class="form-check-label" for="remember">
+                                                    {{ __('Remember Me') }}
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-8 offset-md-4">
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __('Login') }}
+                                            </button>
+
+                                            @if (Route::has('password.request'))
+                                                <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                    {{ __('Forgot Your Password?') }}
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
                     {{-- <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto text-gray-700 sm:h-20">
                         <g clip-path="url(#clip0)" fill="#EF3B2D">
@@ -41,17 +103,16 @@
                         </g>
                     </svg>  --}}
                     <div class="text-center">
-                    <img src="{{ asset('images/amare-store.png') }}" />
                     <h1>Managing sells smartly</h1>
                 </div>
                 </div>
-                
-                <div> 
+
+                <div>
                     {{-- <div id="example"></div> --}}
                 </div>
- 
+
             </div>
         </div>
- 
+
     </body>
 </html>

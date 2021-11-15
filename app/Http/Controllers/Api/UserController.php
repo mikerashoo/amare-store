@@ -20,8 +20,8 @@ class UserController extends Controller
         $user = new User;
         $user->name = $request->name;
         $user->user_name = $request->user_name;
-        $user->role = $request->role; 
-        $user->password = Hash::make('amare1234');
+        $user->role = $request->role;
+        $user->password = Hash::make('werkama123');
         $id = $user->save();
         return User::find($id);
     }

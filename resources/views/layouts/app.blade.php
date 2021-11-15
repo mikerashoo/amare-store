@@ -43,9 +43,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
-                            @endif 
-                        @else 
-                         
+                            @endif
+                        @else
+
 
                      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                          @csrf
@@ -73,7 +73,7 @@
             </div>
         </nav>
 
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
     </div>

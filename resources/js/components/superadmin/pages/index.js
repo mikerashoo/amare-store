@@ -1,14 +1,14 @@
 import Users from './Users';
-import Item from './Item'
+import CategoryItems from './CategoryItems'
 import NewUser from './NewUser'
 import Categories from './Categories'
 import Stocks from './Stocks'
 import ItemTransactions from './ItemTransactions'
 export {
     Users,
-    Item, 
+    CategoryItems,
     NewUser,
     Categories,
-    Stocks, 
+    Stocks,
     ItemTransactions
 }
