@@ -33,7 +33,7 @@ export const itemReducers = (state = INITIAL_STATE, action) => {
             }
 
         case ITEM_ACTIONS.SAVE_ITEM_ACTION:
-            message.loading({ content: 'በመመዝገብ ላይ....', key: MESSAGE_KEY });
+            message.loading({ content: 'Saving please wait....', key: MESSAGE_KEY });
             return {
                 ...state,
                 loading: true,
@@ -42,7 +42,7 @@ export const itemReducers = (state = INITIAL_STATE, action) => {
         case ITEM_ACTIONS.ADD_ITEM_ACTION:
             let items = [...state.data.items];
             items.push(action.item);
-            message.success({ content: 'እቃው በትክክል ተመዝግቧል፡፡', key: MESSAGE_KEY });
+            message.success({ content: 'Item saved successfully!', key: MESSAGE_KEY });
 
             return {
                 ...state,
@@ -66,7 +66,7 @@ export const itemReducers = (state = INITIAL_STATE, action) => {
             let items_ = [...state.data.items];
             let _items = items_.filter((item, i) => (item.id != action.item.id));
 
-            message.success({ content: 'እቃው በትክክል ተሰዝርዟል', key: MESSAGE_KEY });
+            message.success({ content: 'Item deleted succesfully', key: MESSAGE_KEY });
 
             return {
                 ...state,
@@ -80,7 +80,7 @@ export const itemReducers = (state = INITIAL_STATE, action) => {
 
 
         case ITEM_ACTIONS.EDIT_ITEM_ACTION:
-            message.loading({ content: 'የእቃው መረጃ በማስተካከል', key: MESSAGE_KEY });
+            message.loading({ content: 'Updating item information please wait...', key: MESSAGE_KEY });
             return {
                 ...state,
                 loading: true,
@@ -97,7 +97,7 @@ export const itemReducers = (state = INITIAL_STATE, action) => {
                     item.logo_name = action.item.logo_name;
                 }
             });
-            message.success({ content: 'የእቃው መረጃ በትክክል ተመዝግቧል፡፡', key: MESSAGE_KEY });
+            message.success({ content: 'New item saved successfully', key: MESSAGE_KEY });
 
             return {
                 ...state,
