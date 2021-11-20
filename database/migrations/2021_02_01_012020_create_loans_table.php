@@ -20,6 +20,7 @@ class CreateLoansTable extends Migration
             $table->bigInteger('receiver_id')->unsigned()->nullable();
             $table->bigInteger('sell_id')->unsigned();
             $table->double('price')->default(0.0);
+            $table->double('remaining')->default(0.0);
             $table->enum('status', ['unpaid', 'paid'])->default('unpaid');
             $table->timestamps();
         });

@@ -10,6 +10,7 @@ import moment from 'moment'
 import { toInteger, toLower, toNumber } from 'lodash';
 import { StockOutlined } from "@ant-design/icons";
 import { LeftRighBorderedTable } from '../../styled/common';
+import { fetchTodaysLoanGivenAction } from '../../superadmin/actions/homeActions';
 
 function LoanPayment() {
 
@@ -72,7 +73,7 @@ function LoanPayment() {
             amount: paid
         }
         dispatch(saveLoanPaymentAction(loanPayment));
-        dispatch(fetchLoanPaymentsAction(window.user.id));
+        dispatch(fetchTodaysLoanGivenAction(window.user.id));
         setPopVisibility(null);
         setPaid(0);
     }
@@ -135,17 +136,17 @@ function LoanPayment() {
         {
             render: (trans, loan) =>
                 <Popover
-                    title={<> <h5>{loan.customer.name + ' ብድር ክፍያ'} {toInteger(loan.price) - toInteger(getTotalPayment(loan))} ቀር birr</h5> </>}
+                    title={<> <h5>{loan.customer.name + ' : Remaining'} {toInteger(loan.price) - toInteger(getTotalPayment(loan))} birr</h5> </>}
                     style={{ width: '50%' }}
                     content={
                         <>
-                            <Input type="number" addonAfter="birr የተክፈለ" style={{ margin: 5 }} value={paid} onChange={(evt) => onLoanPaymentChange(evt, loan)} />
-                            <Input value="200" disabled addonAfter="birr ቀሪ" style={{ margin: 5 }} value={toInteger(loan.price) - toInteger(getTotalPayment(loan)) - paid} />
+                            <Input type="number" addonAfter="Paid" style={{ margin: 5 }} value={paid} onChange={(evt) => onLoanPaymentChange(evt, loan)} />
+                            <Input value="200" disabled addonAfter="birr will remain" style={{ margin: 5 }} value={toInteger(loan.price) - toInteger(getTotalPayment(loan)) - paid} />
                             <div className="text-right">
-                                <Button type="dashed" size="large" onClick={() => onLoanPopoverVisibility(false, loan)}> ይቅር!</Button>
+                                <Button type="dashed" size="large" onClick={() => onLoanPopoverVisibility(false, loan)}> Cancel!</Button>
 
-                                <Popconfirm title="እርገጠኛ ነኝ የብድር ክፍያ ይመዝገብ" okText="አዎ መዝገብ" cancelText="አይ ተው!" onConfirm={() => onLoanPaymentConfirm(loan)}>
-                                    <Button type="primary" style={{ backgroundColor: 'blueviolet', borderColor: 'blueviolet' }} size="large"> ክፈል</Button>
+                                <Popconfirm title="Are you sure you want to register loan payment" okText="Yes! register" cancelText="Cancel" onConfirm={() => onLoanPaymentConfirm(loan)}>
+                                    <Button type="primary" style={{ backgroundColor: 'blueviolet', borderColor: 'blueviolet' }} size="large"> Save payment </Button>
                                 </Popconfirm>
                             </div>
                         </>
@@ -193,12 +194,13 @@ function LoanPayment() {
             <PageHeader title="Loan management" style={{ marginBottom: 20 }} onBack={() => window.history.back()} />
             <Row gutter={[16, 16]}>
                 <Col span={16}>
-                    <Card hoverable title="Customers with loan" headStyle={{ backgroundColor: '#eef' }}>
+                    <Card loading={loanData.loading} hoverable title="Customers with loan" headStyle={{ backgroundColor: '#eef' }}>
                         <div style={{ padding: 10 }}>
                             <Input placeholder="Search customer" style={{ width: '30%' }} onChange={(evt) => onCustomerSearch(evt)} />
                             <DatePicker placeholder="Pick date" onChange={onDateTimeChange} />
                         </div>
-                        <LeftRighBorderedTable dataSource={loans}
+                        <LeftRighBorderedTable
+                            dataSource={loans}
                             loading={loanData.loading}
                             columns={loanTableColumns}
                             rowKey="id" size="small"
@@ -206,7 +208,7 @@ function LoanPayment() {
                     </Card>
                 </Col>
                 <Col span={8}>
-                    <Card hoverable title="Loans paid today" headStyle={{ backgroundColor: '#eef' }}>
+                    <Card loading={loanData.loading} hoverable title="Loans paid today" headStyle={{ backgroundColor: '#eef' }}>
                         <LeftRighBorderedTable dataSource={loan_payments} loading={loanData.loading} columns={paymentsTableColumns} size="small"
                             rowKey="id"
                             summary={pageData => {
@@ -217,9 +219,9 @@ function LoanPayment() {
                                 return (
                                     <>
                                         <Table.Summary.Row style={{ backgroundColor: 'gold' }}>
-                                            <Table.Summary.Cell>Total</Table.Summary.Cell>
-                                            <Table.Summary.Cell>{totalAmount} birr</Table.Summary.Cell>
-                                            <Table.Summary.Cell>-</Table.Summary.Cell>
+                                            <Table.Summary.Cell key="total">Total</Table.Summary.Cell>
+                                            <Table.Summary.Cell key="total_birr">{totalAmount} birr</Table.Summary.Cell>
+                                            <Table.Summary.Cell key="-">-</Table.Summary.Cell>
                                         </Table.Summary.Row>
                                     </>
                                 )

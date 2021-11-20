@@ -1,21 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteItemAction, editItemAction, fetchItemAction, saveItemAction } from '../actions/itemActions';
-import { Button, Card, Col, Input, PageHeader, Row, Table, Form, Modal, Popconfirm, Avatar } from "antd";
+import { deleteItemAction, editItemAction, fetchItemAction, hideNewItemModalAction, saveItemAction, showNewItemModalAction } from '../actions/itemActions';
+import { Button, Card, Col, Input, PageHeader, Row, Table, Form, Modal, Popconfirm, Avatar, Popover } from "antd";
 import { BASE_URL } from '../constants/api'
+import { DeleteOutlined, EditOutlined, InfoCircleOutlined, InfoOutlined } from '@ant-design/icons';
+import NewItemModal from '../views/NewItemModal';
 
 function CategoryItems(props) {
 
-    let category_id = props.location.state.category_id;
-    const category = useSelector(state => state.category);
+    let category_id = props.location.state.category.id;
+    const _category = props.location.state.category;
+    const categoryState = useSelector(state => state.category);
     const dispatch = useDispatch();
     const [visibleEditModalId, setVisibleEditModalId] = useState();
     const [editName, setEditName] = useState('');
     const [editPrice, setEditPrice] = useState(0.0);
     const [editImage, setEditImage] = useState();
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState();
-    const [image, setImage] = useState();
+
+    console.log(categoryState);
+
+
     useEffect(() => {
         dispatch(fetchItemAction(category_id));
     }, [dispatch]);
@@ -38,21 +42,6 @@ function CategoryItems(props) {
             default:
                 break;
         }
-    }
-
-    const onPriceChange = evt => {
-        let id = evt.target.name;
-        let value = evt.target.value;
-        setPrice(value);
-    }
-
-    const onSubmit = () => {
-        let fd = new FormData();
-        fd.append('image', image);
-        fd.append('name', name);
-        fd.append('category_id', category_id);
-        fd.append('price', price);
-        dispatch(saveItemAction(fd));
     }
 
     const onRemoveItem = (item) => {
@@ -101,6 +90,14 @@ function CategoryItems(props) {
         setVisibleEditModalId(null);
     }
 
+    const itemProperty = (item) => {
+        return <> {
+            item.property_values.map(pro => {
+                let _pro = item.properties.find(_p => _p.id == pro.property_id);
+                return <p key={pro.id}>{_pro.name} : <b>{pro.value ? pro.value + " " + _pro.unit?.name : "-"} </b></p>
+            })
+        } </>
+    }
 
     const itemColumns = [
         {
@@ -117,69 +114,65 @@ function CategoryItems(props) {
             dataIndex: 'price'
         },
         {
+            title: 'Remaining',
+            dataIndex: 'price'
+        },
+
+        {
             render: (item, i) => <>
+                <Popover title={`${item.name} properties`} content={() => itemProperty(item)}>
+                    <Button type="text"><InfoCircleOutlined /> </Button>
+
+                </Popover>
                 <Modal title={item.name} visible={visibleEditModalId == item.id}
                     onCancel={() => setVisibleEditModalId(null)}
                     onOk={() => onEditOk(item)}>
 
                     <Form>
-                        <Form.Item label="ስም">
+                        <Form.Item label="Name">
                             <Input defaultValue={item.name} name="edit_name" onChange={onChange} />
                         </Form.Item>
-                        <Form.Item label="ዋጋ">
+                        <Form.Item label="Price">
                             <Input defaultValue={item.price} name="edit_price" onChange={onChange} />
                         </Form.Item>
-                        <Form.Item label="አርማ">
+                        <Form.Item label="Image">
                             <Input type="file" onChange={handleFileInputChange} name="edit_image" />
                         </Form.Item>
                     </Form>
 
                 </Modal>
 
-                <Button style={{ backgroundColor: 'orange', color: 'white' }} onClick={() => setVisibleEditModalId(item.id)}>Edit</Button>
+                <Button type="text" onClick={() => setVisibleEditModalId(item.id)}><EditOutlined /> </Button>
                 {
                     item.status ?
-                        <Popconfirm title="Are you sure you want to deactivate?" onConfirm={() => onRemoveItem(item)} okText="Yes confirm!"><Button style={{ backgroundColor: 'red', color: 'white' }}>Deactivate</Button></Popconfirm>
+                        <Popconfirm title="Are you sure you want to deactivate?" onConfirm={() => onRemoveItem(item)} okText="Yes confirm!"><Button type="text" style={{ color: 'white' }}><DeleteOutlined /></Button></Popconfirm>
                         :
-                        <Popconfirm title="Are you sure you want to activate?" onConfirm={() => onRemoveItem(item)} okText="Yes confirm!"><Button style={{ backgroundColor: 'green', color: 'white' }}>Activate</Button></Popconfirm>
+                        <Popconfirm title="Are you sure you want to activate?" onConfirm={() => onRemoveItem(item)} okText="Yes confirm!"><Button type="text" style={{ color: 'white' }}>Activate</Button></Popconfirm>
 
                 }
             </>
         }
     ]
 
+    const onAddNewItem = () => {
+        dispatch(showNewItemModalAction());
+    }
 
     return (
         <div>
-            <PageHeader title={category.data ? `${category.data.name}` : 'Title'} onBack={() => window.history.back()} />
-            <Row gutter={[16, 16]}>
-                <Col span={15}>
-                    {
-                        category.data && <Table dataSource={category.data.items} columns={itemColumns} rowKey="id" />
-                    }
-                </Col>
+            <PageHeader
+                title={categoryState.data ? `${categoryState.data.name}` : 'Title'} onBack={() => window.history.back()}
+                extra={[
+                    <Button key={1} onClick={onAddNewItem}>Add new item</Button>
+                ]}
+            />
+            {
+                categoryState.data && <Table dataSource={categoryState.data.items} columns={itemColumns} rowKey="id" />
+            }
+            <Modal closable destroyOnClose onCancel={() => dispatch(hideNewItemModalAction())} title={`New ${_category.name} item`} footer={null} visible={categoryState.new_item_modal}>
+                <NewItemModal category={_category} />
+            </Modal>
 
-                <Col span={8} offset={1}>
-                    <Card hoverable title="New Item Form" loading={category.data?.loading} bordered bodyStyle={{ backgroundColor: '#eee' }}>
-                        <Form encType="multipart/form-data">
-                            <Form.Item>
-                                <Input addonBefore="name" name="name" placeholder="Enter name here" onChange={onChange} />
-                            </Form.Item>
-                            {
-                                category.data &&
-                                <Form.Item label="">
-                                    <Input placeholder="0.00 birr" name={category.data.unit.name} addonBefore={category.data.unit.name + ' price'} onChange={onPriceChange} />
-                                </Form.Item>
-
-                            }
-                            <Input type="file" onChange={handleFileInputChange} name="Pick image" />
-
-                            <Button type="primary" onClick={onSubmit} style={{ marginTop: 20 }}>Save new item</Button>
-                        </Form>
-                    </Card>
-                </Col>
-
-            </Row>
         </div>
     )
 }

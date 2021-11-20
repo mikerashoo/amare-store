@@ -4,16 +4,18 @@ import categorySaga from "./categorySaga";
 import unitSaga from "./unitSaga";
 import itemSaga from "./itemSaga";
 import stockSaga from "./stockSaga";
-import itemTransactionsSaga from "./itemTransactionsSaga"; 
+import itemTransactionsSaga from "./itemTransactionsSaga";
+import homeSaga from "./homeSaga";
 
-function* rootSaga () {
+function* rootSaga() {
     yield all([
         usersSaga(),
         categorySaga(),
         unitSaga(),
         itemSaga(),
         stockSaga(),
-        itemTransactionsSaga()
+        itemTransactionsSaga(),
+        homeSaga()
     ]);
 }
 

@@ -12,6 +12,7 @@ use App\Models\Customer;
 use App\Models\Loan;
 use App\Models\LoanPayment;
 use Carbon\Carbon;
+use PhpParser\Node\Expr\Cast\Double;
 
 class LoanController extends Controller
 {
@@ -23,9 +24,11 @@ class LoanController extends Controller
     public function saveLoanPayment(Request $request)
     {
         $loan_payment = new LoanPayment;
+
         $loan_payment->loan_id = $request->loan_id;
         $loan_payment->user_id = $request->user_id;
-        $loan_payment->amount = $request->amount;
+        $loan_payment->amount = 10;
+
         $loan_payment->save();
         $loan = Loan::find($request->loan_id);
         $paid = 0;
@@ -36,6 +39,8 @@ class LoanController extends Controller
             $loan->status = 'paid';
             $loan->save();
         }
+        $loan->remaining -= $request->amount;
+        $loan->save();
         return LoanPayment::find($loan_payment->id);
     }
 

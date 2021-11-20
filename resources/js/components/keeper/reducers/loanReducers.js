@@ -38,8 +38,6 @@ export const loanReducers = (state = INITIAL_STATE, action) => {
             }
 
         case LOAN_MANAGEMENT_ACTIONS.SAVE_LOAN_PAYMENT_ACTION:
-            message.loading({ content: 'ብድሩ በመመዝገብ ላይ! እባኮ ትንሽ ይጠበቁ!', key: MESSAGE_KEY });
-
             return {
                 ...state,
                 loading: true,
@@ -63,7 +61,7 @@ export const loanReducers = (state = INITIAL_STATE, action) => {
                     }
                 }
             });
-            message.success({ content: 'ብድሩ በትክክል ተሰርዝዋል', key: MESSAGE_KEY });
+            message.success({ content: "Loan payment saved succesfully!", key: MESSAGE_KEY });
             return {
                 ...state,
                 loading: false,

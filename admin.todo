@@ -5,3 +5,9 @@ Items management
     - units empty message
 Categoires
     - Use history push instead of passing id
+    - edit item
+Saga
+    - show error message on fail
+Buy
+    - Validate min price to sell
+Current price

@@ -16,6 +16,7 @@ function* fetchUnpaidLoansSaga() {
 function* saveLoanPaymentSaga(action) {
     try {
         const loansData = yield call(saveLoanPaymentApi, action.payment);
+        console.log(loansData);
         yield put(addLoanPaymentAction(loansData));
     }
     catch (error) {

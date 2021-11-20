@@ -1,82 +1,55 @@
 import React, { useEffect } from 'react';
-import { Spin, Card, Typography, DatePicker, Row, Col, Table } from "antd";
-import { DollarCircleOutlined } from "@ant-design/icons"; 
+import { Spin, Card, Divider, DatePicker, Row, Col, Table, Statistic } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchWeeklyTransactions } from '../../actions/itemTransactionActions';
 import moment from 'moment';
+import TransactionTables from './TransactionTables';
 
 function Weekly(props) {
-    const item_state = useSelector(state => state.itemTransactions); 
+    const item_state = useSelector(state => state.itemTransactions);
     const dispatch = useDispatch();
     const item_id = props.item_id;
-    
-    let weekly = item_state.weekly;
 
-    const columns = [
-        {
-            title: 'ብዛት',
-            dataIndex: 'quantity',
-            render: (quantity, transact) => <>{transact.type == 'in' ? <span style={{color: 'green'}}> + </span> : 
-            transact.user.role == 'keeper' && transact.price != null ? <span style={{color: 'green'}}><DollarCircleOutlined /></span> : <span style={{color: 'red'}}> - </span> }  {quantity}</>
-        },
-        {
-            title: 'ዋጋ',
-            dataIndex: 'price',
-            render: (price, transact) => <>{price ? price + 'ብር' : '-'}</>
-        },
-        {
-            title: 'ጠቅላላ ዋጋ',
-            dataIndex: 'price',
-            render: (price, transact) => <>{price ? price * transact.quantity + ' ብር' : '-'}</>
-        },
-        {
-            title: 'ባለሞያ',
-            dataIndex: 'user',
-            render: (user, transact) => <>{user.id !== window.user.id ? user.name : 'You'}</>
-        },
-        {
-            title: 'ቀን',
-            dataIndex: 'created_at',
-            render: (created_at, transact) => <>{moment(created_at).fromNow()}</>
-        }
-    ];
 
     const { RangePicker } = DatePicker;
-    const dateFormat = 'YYYY/MM/DD'; 
-    let today = moment();  
-    let start_date = today.startOf('week'); 
-    let end_date = today; 
-    console.log("start date", start_date);
-    console.log("end date", end_date);
+    const dateFormat = 'YYYY-MM-DD hh:mm:ss';
+
+    let today = moment().toISOString();
+    let end_date = today;
+    let start_date = moment().startOf('week').toISOString();
 
     useEffect(() => {
-        dispatch(fetchWeeklyTransactions(item_id, start_date.toString(), end_date.toString())); 
+        dispatch(fetchWeeklyTransactions(item_id, start_date, end_date));
     }, [dispatch, item_id]);
- 
-    function onChange(date, dateRange) { 
-        console.log(date);
-        console.log('date range', dateRange);
-        // dispatch(fetchWeeklyTransactions(item_id, dateRange)); 
-      }
-      
+
+    function onChange(date, dateRange) {
+        if (date == null || date == undefined) {
+            dispatch(fetchWeeklyTransactions(item_id, start_date, end_date));
+        }
+        else {
+            dispatch(fetchWeeklyTransactions(item_id, dateRange[0], dateRange[1]));
+
+        }
+    }
+
     return (
-        <Spin spinning={weekly.loading}>
+        <Spin spinning={item_state.weekly.loading}>
             <Card>
                 <Row>
                     <Col span={18}>
-                    <Typography.Title>የ{item_state.item?.name} የሳምንት ዝውውር </Typography.Title>
+                        {/* <h3>{item_state.item?.name} Weekly transactions</h3> */}
                     </Col>
                     <Col span={6}>
-                    <RangePicker
-                    onChange={onChange}
-      defaultValue={[start_date , today]}
-      format={dateFormat}
-    />
+                        <RangePicker
+                            onChange={onChange}
+                            // defaultValue={[start_date, end_date]}
+                            format={dateFormat}
+                        />
                     </Col>
                 </Row>
+                <Divider />
+                <TransactionTables itemData={item_state.weekly} />
 
-                <Table columns={columns} dataSource={weekly.transactions} rowKey="id"/>
-                
             </Card>
         </Spin>
     );

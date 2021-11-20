@@ -9,15 +9,15 @@ function SuperAdmin() {
     return (
         <Provider store={store}>
             <BrowserRouter basename="/superadmin">
-                <Row style={{ backgroundColor: '#f3f6ff', height: '100vh' }} gutter={[16, 16]}>
+                <Row style={{ backgroundColor: '#f3f6ff', minHeight: '100vh' }} gutter={[16, 16]}>
                     <Col span={4} style={{ height: '100%', backgroundColor: '#f3f6ff', paddingTop: 10 }}>
                         <SideMenu />
                     </Col>
-                    <Col span={20} style={{ backgroundColor: '#F5F5F8', height: '100%', padding: '5% 2%' }}>
-                        <Card>
-                            <PageRoutes />
+                    <Col span={20} style={{ backgroundColor: '#F5F5F8', minHeight: '100%', padding: '2%' }}>
+                        {/* <Card> */}
+                        <PageRoutes />
 
-                        </Card>
+                        {/* </Card> */}
                     </Col>
                 </Row>
             </BrowserRouter>

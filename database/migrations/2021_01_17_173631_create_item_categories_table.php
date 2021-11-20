@@ -17,7 +17,6 @@ class CreateItemCategoriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('icon')->nullable();
-            $table->bigInteger('unit_id')->unsigned()->nullable();
             $table->timestamps();
         });
     }

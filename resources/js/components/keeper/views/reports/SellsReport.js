@@ -20,17 +20,17 @@ function SellsReport(props) {
         }, {
             title: 'Total sell',
             dataIndex: 'total',
-            render: total => <>{total} ብር</>
+            render: total => <>{total} birr</>
         },
         {
             title: 'Paid',
             dataIndex: 'loan',
-            render: (loan, sell) => <Typography.Text type="success">{loan ? sell.total - loan.price : sell.total} ብር</Typography.Text>
+            render: (loan, sell) => <Typography.Text type="success">{loan ? sell.total - loan.price : sell.total} birr</Typography.Text>
         },
         {
             title: 'Loan',
             dataIndex: 'loan',
-            render: loan => <Typography.Text type="warning">{loan ? loan.price : 0}  ብር</Typography.Text>
+            render: loan => <Typography.Text type="warning">{loan ? loan.price : 0}  birr</Typography.Text>
         },
         {
             title: 'time',
@@ -42,32 +42,30 @@ function SellsReport(props) {
             render: (trans, sell) => <>{sell.user_id != window.user.id ?
                 <Tag color="orange">{sell.user.name}</Tag> :
                 moment(sell.created_at).isSame(moment(), 'day') ?
-                    <Popconfirm title="እርገጠኛ ነኝ ሽያጩን ሰርዝ" okText="አዎ ሰርዝ" cancelText="አይ ተው!" onConfirm={() => deleteSell(sell)}>
-                        <Button type="primary" style={{ backgroundColor: 'red', borderColor: 'red' }} size="small">ሰርዝ</Button>
+                    <Popconfirm title="Are you sure you want to delete?" okText="Yes delete" cancelText="No back" onConfirm={() => deleteSell(sell)}>
+                        <Button type="primary" style={{ backgroundColor: 'red', borderColor: 'red' }} size="small">Delete</Button>
                     </Popconfirm> : <Tag color="green">You</Tag>
             }</>
         },
     ]
     const sellsTransactionTableColumns = [
         {
-            title: 'የዕቃው አይነት',
             render: (trans) => <> {trans.item.name}</>
         },
         {
-            title: 'ብዛት',
+            title: 'Quantity',
             dataIndex: 'quantity'
         },
         {
-            title: 'የአንዱ ዋጋ',
+            title: 'Average price',
             dataIndex: 'price',
-            render: price => <> {price} ብር</>
+            render: price => <> {price} birr</>
         },
         {
-            title: 'ጠቅላላ ዋጋ',
-            render: (trans) => <> {trans.price * trans.quantity} ብር</>
+            title: 'Total price',
+            render: (trans) => <> {trans.price * trans.quantity} birr</>
         },
         {
-            title: 'ሰዓት',
             dataIndex: 'created_at',
             render: trans => <>{moment(trans).fromNow()} </>
         },
@@ -76,7 +74,7 @@ function SellsReport(props) {
     let sells = props.sells;
 
     return (
-        <Card style={{ marginBottom: 30 }} title="የቀን ገብ በሽያጭ">
+        <Card style={{ marginBottom: 30 }} title="Todays sell report">
 
             <Table
                 // rowClassName={(record, index) => record.user_id != window.user.id ? 'table-row-light' :  'table-row-dark'}
@@ -93,10 +91,10 @@ function SellsReport(props) {
                         <>
                             <Table.Summary.Row style={{ backgroundColor: 'gold' }}>
                                 <Table.Summary.Cell>-</Table.Summary.Cell>
-                                <Table.Summary.Cell>ጠቅላላ</Table.Summary.Cell>
-                                <Table.Summary.Cell>{props.total_sell} ብር</Table.Summary.Cell>
-                                <Table.Summary.Cell>{props.total_sell - props.total_loan} ብር</Table.Summary.Cell>
-                                <Table.Summary.Cell>{props.total_loan} ብር</Table.Summary.Cell>
+                                <Table.Summary.Cell>Total</Table.Summary.Cell>
+                                <Table.Summary.Cell>{props.total_sell} birr</Table.Summary.Cell>
+                                <Table.Summary.Cell>{props.total_sell - props.total_loan} birr</Table.Summary.Cell>
+                                <Table.Summary.Cell>{props.total_loan} birr</Table.Summary.Cell>
                                 <Table.Summary.Cell>-</Table.Summary.Cell>
                                 <Table.Summary.Cell>-</Table.Summary.Cell>
                             </Table.Summary.Row>

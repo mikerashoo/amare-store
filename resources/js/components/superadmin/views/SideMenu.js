@@ -5,7 +5,7 @@ import { SideMenuItem, SideSubMenuItem } from '../admin-styled'
 function SideMenu() {
     return (
         <div>
-            <Menu mode="inline" defaultOpenKeys={['contents', 'stocks', 'reports']} style={{ height: '100vh', backgroundColor: "#f5f5f5" }}>
+            <Menu mode="inline" defaultOpenKeys={['contents', 'stocks', 'reports']} style={{ minHeight: '100%', backgroundColor: "#f3f6ff" }}>
                 <SideSubMenuItem title="Content Management" key="contents">
                     <SideMenuItem key="users">
                         <NavLink to="/users"> Users </NavLink>

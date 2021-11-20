@@ -10,7 +10,7 @@ class Sell extends Model
     use HasFactory;
     public function transactions()
     {
-        return $this->hasMany('App\Models\Transaction', 'sell_id');
+        return $this->hasMany('App\Models\SellTransaction', 'sell_id');
     }
 
     public function loan()
@@ -22,7 +22,7 @@ class Sell extends Model
     {
         return $this->belongsTo('App\Models\Customer', 'customer_id');
     }
-    
+
     public function user()
     {
         return $this->belongsTo('App\Models\User', 'user_id');

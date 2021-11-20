@@ -19,7 +19,8 @@ class CreateItemsTable extends Migration
             $table->string('icon')->nullable();
             $table->bigInteger('category_id')->unsigned();
             $table->double('price')->default(0.0);
-            $table->double('remaining')->default(0);
+            $table->integer('remaining')->default(0);
+            $table->integer('threshold')->default(0);
             $table->string('logo_name')->nullable();
             $table->timestamps();
             $table->tinyInteger('status')->default(1);

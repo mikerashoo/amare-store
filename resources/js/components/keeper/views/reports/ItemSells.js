@@ -48,11 +48,11 @@ function ItemSells() {
         {
             title: 'Per price',
             dataIndex: 'price',
-            render: price => <> {price} ብር</>
+            render: price => <> {price} birr</>
         },
         {
             title: 'Total sell amount',
-            render: (trans) => <> {trans.price * trans.quantity} ብር</>
+            render: (trans) => <> {trans.price * trans.quantity} birr</>
         },
         {
             title: 'time',

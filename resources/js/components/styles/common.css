@@ -1,3 +1,7 @@
 body{
     background-color: #f8fafc !important;
 }
+.table-row-green{
+    background-color: rgb(233, 250, 233);
+    color: green;
+}

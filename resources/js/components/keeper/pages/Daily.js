@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { PageHeader, Card, Row, Col, Tabs, DatePicker, Divider, Skeleton } from "antd";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchDailySellsAction, fetchDailyTransactionsAction, fetchTotalLoanPaymentOnDate, fetchTotalLoanPaymentOnDateAction } from "../actions/dailyActions";
@@ -14,6 +14,7 @@ function Daily() {
 
     const dispatch = useDispatch();
     const dailySell = useSelector(state => state.dailySell);
+    const [selectedDate, setSelectedDate] = useState(TODAY);
 
     dailySell.data.sells.forEach(sell => {
         total_sell += parseFloat(sell.total);
@@ -22,23 +23,18 @@ function Daily() {
         }
     });
 
-
-
     useEffect(() => {
-        dispatch(fetchDailyTransactionsAction(TODAY));
-        dispatch(fetchDailySellsAction(TODAY));
-        dispatch(fetchTotalLoanPaymentOnDateAction(TODAY));
-    }, [dispatch]);
+        dispatch(fetchDailyTransactionsAction(selectedDate));
+        dispatch(fetchDailySellsAction(selectedDate));
+        dispatch(fetchTotalLoanPaymentOnDateAction(selectedDate));
+    }, [selectedDate]);
 
     const onSpecificDateTimeChange = (date, date_string) => {
-        console.log("date", date);
-        console.log("datestring", date_string);
         if (date_string.length == 0) {
             date_string = TODAY;
         }
-        dispatch(fetchDailyTransactionsAction(date_string));
-        dispatch(fetchDailySellsAction(date_string));
-        dispatch(fetchTotalLoanPaymentOnDateAction(date_string));
+        setSelectedDate(date_string);
+
     }
 
     const isDateFuture = (current) => {
@@ -49,9 +45,9 @@ function Daily() {
     return (
         <div style={{ width: '100%', height: '100%' }}>
 
-            <PageHeader title="Daily sell reports" style={{ marginBottom: 20 }} onBack={() => window.history.back()} extra={[
+            <PageHeader title={`Daily sell reports ( ${selectedDate} )`} style={{ marginBottom: 20 }} onBack={() => window.history.back()} extra={[
                 <DatePicker key="1" onChange={onSpecificDateTimeChange} disabledDate={isDateFuture} />,
-                <DatePicker.RangePicker key="2" showTime disabledDate={isDateFuture} />
+                // <DatePicker.RangePicker onChange={onSpecificDateTimeChange} key="2" showTime disabledDate={isDateFuture} />
             ]} />
             <Divider />
             <Row gutter={[12, 12]}>
