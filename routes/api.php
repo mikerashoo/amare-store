@@ -18,8 +18,14 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/users', [App\Http\Controllers\Api\UserController::class, 'index']);
-Route::post('/new_user', [App\Http\Controllers\Api\UserController::class, 'create']);
+Route::prefix('users')->group(function () {
+    Route::get('/', [App\Http\Controllers\Api\UserController::class, 'index']);
+    Route::post('/create', [App\Http\Controllers\Api\UserController::class, 'create']);
+    Route::post('/update', [App\Http\Controllers\Api\UserController::class, 'update']);
+    Route::delete('/{id}', [App\Http\Controllers\Api\UserController::class, 'delete']);
+});
+
+
 
 Route::get('/item_categories', [App\Http\Controllers\Api\ItemController::class, 'categories']);
 

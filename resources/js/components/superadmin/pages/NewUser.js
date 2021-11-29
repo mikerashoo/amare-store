@@ -28,9 +28,9 @@ function NewUser() {
         <div>
             <PageHeader onBack={() => window.history.back()} title="New User Form" />
             {
-                users.message && <Alert message={users.message} />
+                users.message && <Alert message={users.message} style={{ marginBottom: 10 }} />
             }{
-                users.error && <Alert message={users.error} type="error" />
+                users.error && <Alert message={users.error} type="error" style={{ marginBottom: 10 }} />
             }
             <Form {...layout} form={form} onFinish={onSubmit}>
                 <Form.Item label="Name" name="name" rules={[{ required: true }]}>

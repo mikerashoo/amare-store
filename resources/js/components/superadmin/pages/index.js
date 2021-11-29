@@ -5,6 +5,9 @@ import Categories from './Categories'
 import Stocks from './Stocks'
 import ItemTransactions from './ItemTransactions'
 import Home from './Home'
+import StockReports from './StockReports'
+import SellReports from './SellReports'
+import BuyReports from './BuyReports'
 export {
     Users,
     CategoryItems,
@@ -12,5 +15,8 @@ export {
     Categories,
     Stocks,
     ItemTransactions,
-    Home
+    Home,
+    StockReports,
+    SellReports,
+    BuyReports
 }

@@ -7,7 +7,7 @@ export const fetchItemCategoriesApi = async () => {
 }
 
 export const saveItemCategoryApi = async (category) => {
-    const call = await axios.post(SAVE_ITEM_CATEGORIES_URL, { name: category.name, properties: category.properties });
+    const call = await axios.post(SAVE_ITEM_CATEGORIES_URL, { name: category.name, properties: category.properties, code: category.code });
     let response = await call.data;
     return await response;
 }

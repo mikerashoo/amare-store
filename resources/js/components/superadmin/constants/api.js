@@ -1,7 +1,8 @@
 export const BASE_URL = "http://127.0.0.1:8000/";
 export const FETCH_USERS_URL = '/api/users';
-export const SAVE_NEW_USER = '/api/new_user';
-
+export const SAVE_NEW_USER = '/api/users/create';
+export const UPDATE_USER_URL = '/api/users/update'
+export const DELETE_USER_URL = '/api/users/'
 // Items api
 export const SAVE_ITEM_URL = "/api/items/save";
 export const UPDATE_ITEM_URL = "/api/items/update";

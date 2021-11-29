@@ -7,9 +7,6 @@ function NewItemCategory(props) {
     const [form] = useForm();
     const dispatch = useDispatch();
 
-    const onNameChange = (evt) => {
-        setName(evt.target.value);
-    }
 
     const handleOnSubmit = (category_data) => {
         dispatch(saveCategoryAction(category_data));
@@ -20,7 +17,10 @@ function NewItemCategory(props) {
         <Card bordered hoverable title="Add Category" loading={props.categories.loading} style={{ backgroundColor: 'whitesmoke' }}>
             <Form onFinish={handleOnSubmit} form={form}>
                 <Form.Item label="Name" name="name" rules={[{ required: true }]}>
-                    <Input placeholder="Enter name here" onChange={onNameChange} />
+                    <Input placeholder="Enter name here" />
+                </Form.Item>
+                <Form.Item label="Code" name="code" rules={[{ required: true }]}>
+                    <Input placeholder="Enter code here" />
                 </Form.Item>
                 <Form.Item label="Properties" name="properties">
                     <Checkbox.Group style={{ width: '100%' }}>

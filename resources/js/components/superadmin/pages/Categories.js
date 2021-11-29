@@ -46,8 +46,10 @@ function Categories() {
                         }
                     } >{category.name} </Link> </>
         },
-
-
+        {
+            title: "code",
+            dataIndex: 'code'
+        }
     ]
 
     return (

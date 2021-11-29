@@ -23,8 +23,13 @@ class ItemController extends Controller
 
     public function saveCategory(Request $request)
     {
+        $item_category = ItemCategory::where('code', $request->code)->first();
+        if ($item_category != null) {
+            return -1;
+        }
         $category = new ItemCategory;
         $category->name = $request->name;
+        $category->code = $request->code;
         $category->save();
         $category->item_properties()->sync($request->properties);
 
@@ -45,11 +50,17 @@ class ItemController extends Controller
 
     public function save(Request $request)
     {
+        $_item = Item::where('code', $request->code)->first();
+        if ($_item != null) {
+            return -1;
+        }
         $item = new Item;
         $item->name = $request->name;
-        // $item->price = $request->price;
+        $item->code = $request->code;
+
+        $item->code = $request->code;
+        $item->price = $request->price;
         $item->threshold = $request->threshold;
-        // $item->remaining = $request->remaining;
         $item->category_id = $request->category_id;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
@@ -72,10 +83,18 @@ class ItemController extends Controller
 
     public function update(Request $request)
     {
-
-        $item = Item::find($request->item_id);
+        $_item = Item::where('code', $request->code)->where('id', '!=', $request->id)->first();
+        if ($_item != null) {
+            return -1;
+        }
+        $item = Item::find($request->id);
         $item->name = $request->name;
+        $item->code = $request->code;
+
+        $item->code = $request->code;
         $item->price = $request->price;
+        $item->threshold = $request->threshold;
+        $item->category_id = $request->category_id;
         if ($request->hasFile('image')) {
             $file = $request->file('image');
             $file_name = $file->getClientOriginalName();
@@ -84,7 +103,20 @@ class ItemController extends Controller
             $item->logo_name = $file_name;
         }
         $item->save();
-        return Item::find($request->item_id);
+
+        $category = ItemCategory::find($request->category_id);
+        $props = $category->item_properties;
+        foreach ($props as $key => $pro) {
+            if ($request->has($pro->id)) {
+                $item->properties()
+                    ->newPivotStatement()
+                    ->where('item_id', '=', $item->id)
+                    ->where('property_id', '=', $pro->id)
+                    ->update(array('value' => $request->get($pro->id)));
+                // $item->properties()->attach($pro->id, ['value' => $request->get($pro->id)]);
+            }
+        }
+        return Item::find($item->id);
     }
 
 

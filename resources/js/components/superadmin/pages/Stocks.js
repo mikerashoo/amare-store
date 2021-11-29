@@ -47,7 +47,7 @@ function Stocks() {
             dataIndex: 'id'
         },
         {
-            title: 'name',
+            title: 'Name',
             dataIndex: 'name',
             render: (name, item) => <Link to={{
                 pathname: '/item_transactions', state: {
@@ -55,6 +55,10 @@ function Stocks() {
                 }
             }}> {item.name} </Link>
             // render: (name, item) => <NavLink to={`/item_transactions/${item.id}`}>{item.name} </NavLink>
+        },
+        {
+            title: "Code",
+            dataIndex: 'code'
         },
         {
             title: 'Remaining in store',

@@ -19,6 +19,11 @@ export const saveItemAction = (item) => ({
     type: ITEM_ACTIONS.SAVE_ITEM_ACTION,
     item
 });
+
+export const saveItemErrorAction = () => ({
+    type: ITEM_ACTIONS.SAVE_ITEM_ERROR_ACTION
+});
+
 export const addItemAction = (item) => ({
     type: ITEM_ACTIONS.ADD_ITEM_ACTION,
     item
@@ -46,5 +51,14 @@ export const showNewItemModalAction = () => ({
 });
 
 export const hideNewItemModalAction = () => ({
-    type: ITEM_ACTIONS.HIDE_NEW_ITEM_MODAL_ACTION
+    type: ITEM_ACTIONS.HIDE_NEW_ITEM_MODAL_ACTION,
+});
+
+export const showItemEditModalAction = (id) => ({
+    type: ITEM_ACTIONS.SHOW_ITEM_EDIT_MODAL_ACTION,
+    id
+});
+
+export const hideItemEditModalAction = () => ({
+    type: ITEM_ACTIONS.HIDE_ITEM_EDIT_MODAL_ACTION
 });

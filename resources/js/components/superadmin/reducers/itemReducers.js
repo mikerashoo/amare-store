@@ -5,17 +5,22 @@ const INITIAL_STATE = {
     loading: false,
     error: null,
     message: null,
-    data: null,
-    new_item_modal: false
+    data: {
+        items: []
+    },
+    new_item_modal: false,
+    edit_item_id: 0
 }
 
 const MESSAGE_KEY = "ITEM_REDUCER_KEY";
 export const itemReducers = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case ITEM_ACTIONS.FETCH_ITEM_ACTION:
+            console.log("fetch called");
             return {
                 ...state,
-                loading: true
+                loading: true,
+                edit_item_id: 0
             }
 
         case ITEM_ACTIONS.SHOW_ITEM_DETAIL_ACTION:
@@ -39,11 +44,15 @@ export const itemReducers = (state = INITIAL_STATE, action) => {
                 loading: true,
             }
 
+        case ITEM_ACTIONS.SAVE_ITEM_ERROR_ACTION:
+            return {
+                ...state,
+                loading: false,
+            }
+
         case ITEM_ACTIONS.ADD_ITEM_ACTION:
             let items = [...state.data.items];
             items.push(action.item);
-            message.success({ content: 'Item saved successfully!', key: MESSAGE_KEY });
-
             return {
                 ...state,
                 loading: false,
@@ -88,24 +97,15 @@ export const itemReducers = (state = INITIAL_STATE, action) => {
 
 
         case ITEM_ACTIONS.UPDATE_ITEM_ACTION:
-            let edit_items = state.data.items;
 
-            edit_items.map(item => {
-                if (item.id == action.item.id) {
-                    item.name = action.item.name;
-                    item.price = action.item.price;
-                    item.logo_name = action.item.logo_name;
-                }
-            });
-            message.success({ content: 'New item saved successfully', key: MESSAGE_KEY });
 
             return {
                 ...state,
                 loading: false,
-                message: 'Item Removed Successfully!',
+                edit_item_id: 0,
                 data: {
                     ...state.data,
-                    items: edit_items
+                    items: state.data.items.map(item => item.id == action.item.id ? action.item : item)
                 },
             }
 
@@ -119,6 +119,18 @@ export const itemReducers = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 new_item_modal: false
+            }
+
+        case ITEM_ACTIONS.SHOW_ITEM_EDIT_MODAL_ACTION:
+            return {
+                ...state,
+                edit_item_id: action.id
+            }
+
+        case ITEM_ACTIONS.HIDE_ITEM_EDIT_MODAL_ACTION:
+            return {
+                ...state,
+                edit_item_id: 0
             }
 
         default: return state;

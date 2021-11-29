@@ -23,8 +23,15 @@ function SideMenu() {
                 </SideSubMenuItem>
 
                 <SideSubMenuItem title="Reports" key="reports">
-                    <SideMenuItem disabled>Daily</SideMenuItem>
-                    <SideMenuItem disabled>Monthly</SideMenuItem>
+                    <SideMenuItem>
+                        <NavLink to="/stock_reports"> Stock reports </NavLink>
+                    </SideMenuItem>
+                    <SideMenuItem>
+                        <NavLink to="/sell_reports"> Sell reports </NavLink>
+                    </SideMenuItem>
+                    <SideMenuItem>
+                        <NavLink to="/buy_reports"> Buy reports </NavLink>
+                    </SideMenuItem>
                 </SideSubMenuItem>
             </Menu>
         </div>

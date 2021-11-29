@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Switch, useRouteMatch } from 'react-router'
-import { Item, Users, NewUser, Categories, Stocks, ItemTransactions, CategoryItems, Home } from '../pages'
+import { Item, Users, NewUser, Categories, Stocks, ItemTransactions, CategoryItems, Home, StockReports, BuyReports, SellReports } from '../pages'
 import NewBuy from '../pages/NewBuy';
 function PageRoutes() {
     let { path, url } = useRouteMatch();
@@ -12,6 +12,9 @@ function PageRoutes() {
             <Route component={Categories} path="/categories" />
             <Route component={Stocks} path="/stocks" />
             <Route component={NewBuy} path="/new_buy" />
+            <Route component={StockReports} path="/stock_reports" />
+            <Route component={BuyReports} path="/buy_reports" />
+            <Route component={SellReports} path="/sell_reports" />
             <Route path={'/item_transactions'}>
                 <ItemTransactions />
             </Route>

@@ -1,5 +1,5 @@
 export const FETCH_USERS_URL = '/api/users';
-export const SAVE_NEW_USER = '/api/new_user';
+export const SAVE_NEW_USER = '/api/users/create';
 
 // Items api
 export const SAVE_ITEM_URL = "/api/items/save";

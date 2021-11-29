@@ -3,6 +3,7 @@ user management
     - user saved message change to modal
 Items management
     - units empty message
+    - show default image on edit
 Categoires
     - Use history push instead of passing id
     - edit item
@@ -11,3 +12,4 @@ Saga
 Buy
     - Validate min price to sell
 Current price
+
