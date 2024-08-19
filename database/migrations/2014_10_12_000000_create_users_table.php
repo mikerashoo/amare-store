@@ -16,7 +16,7 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('user_name')->unique(); 
+            $table->string('user_name')->unique();
             $table->enum('role', ['keeper', 'admin','super_admin'])->nullable();
             $table->boolean('is_active')->default(1);
             $table->string('password');
@@ -25,8 +25,8 @@ class CreateUsersTable extends Migration
         });
 
         DB::table('users')->insert([
-            'name'=>'Amare Birhanu',
-            'user_name'=>'amare',
+            'name'=>'Mikiyas Birhanu',
+            'user_name'=>'mkbirhanu',
             'role'=>'super_admin',
             'password'=>Hash::make('12345678'),
         ]);
